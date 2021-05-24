@@ -1,0 +1,78 @@
+* {
+  box-sizing: border-box;
+}
+path {
+  /* transition: 4s; */
+}
+body {
+  padding: 0px;
+  margin: 0px;
+}
+ul {
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  padding: 0px;
+  grid-gap: 5px;
+}
+li{
+    cursor: pointer;
+}
+p {
+  cursor: pointer;
+}
+button{
+  height: min-content;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    width: 160px;
+    /* border: 0px; */
+    border-radius: 2px;
+    background-color: #ff2717;
+    color: white;
+    border: 0px;
+    padding: 12px;
+    cursor: pointer;
+}
+button:hover{
+  background-color: #d40f01;
+}
+#map {
+  margin: 0px;
+  height: 100vh;
+  width: calc(100vw - 160px);
+  display: inline-block;
+}
+#root {
+  display: flex;
+  justify-content: space-between;
+}
+.calendar {
+  width: 160px;
+  text-align: center;
+  justify-content: center;
+  justify-items: center;
+  height: 100vh;
+  overflow: auto;
+}
+.calendar > div {
+  display: grid;
+}
+.active-mon,
+.active-date {
+  color: red !important;
+}
+
+.leaflet-popup-content {
+  margin: 20px;
+  display: grid;
+}
+.leaflet-popup-content p {
+  margin: 0px;
+}
+.leaflet-container a.leaflet-popup-close-button {
+  position: absolute;
+  top: 2px;
+  right: 6px;
+}
