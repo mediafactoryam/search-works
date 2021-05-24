@@ -99,14 +99,8 @@ $(document).ready(function () {
           }
         }
       });
-
-      // $("li").removeClass("active-date");
-      // $(`li[data-date="${date[i]}"]`).addClass("active-date");
-      // $(`p`).removeClass("active-date");
-      // $(`p[data-mon="${date[i].split("-")[1]}"]`).addClass("active-date");
     });
-    setTimeout(()=>$(this).removeClass("click"),1000)
-    ;
+    setTimeout(() => $(this).removeClass("click"), 1000);
   });
   function createCircke(place, radius) {
     let isFound = false;
@@ -136,34 +130,37 @@ $(document).ready(function () {
           color: "transparent",
           fillColor: `rgb(${rgb},0 , 0)`,
           fillOpacity: 0.5,
-          radius: 2000,
+          radius: Math.pow(20 - map.getZoom(), 3.3),
         }).addTo(map);
+
         var myZoom = {
           start: map.getZoom(),
           end: map.getZoom(),
         };
         map.on("zoomstart", function (e) {
-          if ($(`.click`).length == 0) {
-            myZoom.start = map.getZoom();
-          }
+          myZoom.start = map.getZoom();
         });
 
         map.on("zoomend", function (e) {
-          if ($(`.click`).length == 0) {
-            myZoom.end = map.getZoom();
-            var diff = myZoom.start - myZoom.end;
-            console.log(diff);
-            if (diff > 0) {
-              cir.setRadius(cir.getRadius() * 2);
-            } else if (diff < 0) {
-              cir.setRadius(cir.getRadius() / 2);
-            }
+          let r = Math.pow(20 - map.getZoom(), 3.3);
+          // if (e._lastCenter != { lat: 39.7572948, lng: 47.1665142 }) {
+          myZoom.end = map.getZoom();
+          var diff = myZoom.start - myZoom.end;
+          console.log(e);
+          if (diff > 0) {
+            cir.setRadius(r );
+          } else if (diff < 0) {
+            cir.setRadius(r);
           }
+          // }
         });
+
         cir.on("mouseover", function (e) {
           e.target
             .bindPopup(
-              `<p>${place.place}</p><br><p style="text-align: center;">${
+              `<p>${
+                place.place
+              }</p><br>${cir.getRadius()}<p style="text-align: center;">${
                 radius != undefined ? radius : general
               }</p>`
             )
