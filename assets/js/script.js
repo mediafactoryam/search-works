@@ -133,6 +133,23 @@ $(document).ready(function () {
           fillOpacity: 0.5,
           radius: 2000,
         }).addTo(map);
+        var myZoom = {
+          start:  map.getZoom(),
+          end: map.getZoom()
+        };
+        map.on('zoomstart', function(e) {
+          myZoom.start = map.getZoom();
+       });
+       
+       map.on('zoomend', function(e) {
+           myZoom.end = map.getZoom();
+           var diff = myZoom.start - myZoom.end;
+           if (diff > 0) {
+               cir.setRadius(cir.getRadius() * 2);
+           } else if (diff < 0) {
+               cir.setRadius(cir.getRadius() / 2);
+           }
+       });
         cir.on("mouseover", function (e) {
           e.target
             .bindPopup(
