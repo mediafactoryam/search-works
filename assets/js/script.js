@@ -52,7 +52,25 @@ $(document).ready(function () {
   });
 
   let cirArr = [];
-
+  cirArr.map(cir=>{
+    var myZoom = {
+      start:  map.getZoom(),
+      end: map.getZoom()
+    };
+    map.on('zoomstart', function(e) {
+      myZoom.start = map.getZoom();
+   });
+   
+   map.on('zoomend', function(e) {
+       myZoom.end = map.getZoom();
+       var diff = myZoom.start - myZoom.end;
+       if (diff > 0) {
+           cir.setRadius(cir.getRadius() * 2);
+       } else if (diff < 0) {
+           cir.setRadius(cir.getRadius() / 2);
+       }
+   });
+  })
   date.map((j, i) => {
     DATA.map((place) => {
       for (const k of Object.keys(place.date)) {
@@ -133,23 +151,23 @@ $(document).ready(function () {
           fillOpacity: 0.5,
           radius: 2000,
         }).addTo(map);
-        var myZoom = {
-          start:  map.getZoom(),
-          end: map.getZoom()
-        };
-        map.on('zoomstart', function(e) {
-          myZoom.start = map.getZoom();
-       });
+      //   var myZoom = {
+      //     start:  map.getZoom(),
+      //     end: map.getZoom()
+      //   };
+      //   map.on('zoomstart', function(e) {
+      //     myZoom.start = map.getZoom();
+      //  });
        
-       map.on('zoomend', function(e) {
-           myZoom.end = map.getZoom();
-           var diff = myZoom.start - myZoom.end;
-           if (diff > 0) {
-               cir.setRadius(cir.getRadius() * 2);
-           } else if (diff < 0) {
-               cir.setRadius(cir.getRadius() / 2);
-           }
-       });
+      //  map.on('zoomend', function(e) {
+      //      myZoom.end = map.getZoom();
+      //      var diff = myZoom.start - myZoom.end;
+      //      if (diff > 0) {
+      //          cir.setRadius(cir.getRadius() * 2);
+      //      } else if (diff < 0) {
+      //          cir.setRadius(cir.getRadius() / 2);
+      //      }
+      //  });
         cir.on("mouseover", function (e) {
           e.target
             .bindPopup(
@@ -162,6 +180,7 @@ $(document).ready(function () {
 
         cirArr.push(cir);
       } else {
+        
         for (const i in cirArr) {
           if (i._leaflet_id == cir._leaflet_id) cirArr[i] = cir;
         }
