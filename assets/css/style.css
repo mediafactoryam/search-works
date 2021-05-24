@@ -70,6 +70,7 @@ button:hover{
 }
 .leaflet-popup-content p {
   margin: 0px;
+  font-size: 15px;
 }
 .leaflet-container a.leaflet-popup-close-button {
   position: absolute;
