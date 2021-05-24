@@ -100,10 +100,10 @@ $(document).ready(function () {
         }
       });
 
-      $("li").removeClass("active-date");
-      $(`li[data-date="${date[i]}"]`).addClass("active-date");
-      $(`p`).removeClass("active-date");
-      $(`p[data-mon="${date[i].split("-")[1]}"]`).addClass("active-date");
+      // $("li").removeClass("active-date");
+      // $(`li[data-date="${date[i]}"]`).addClass("active-date");
+      // $(`p`).removeClass("active-date");
+      // $(`p[data-mon="${date[i].split("-")[1]}"]`).addClass("active-date");
     });
     setTimeout(()=>$(this).removeClass("click"),1000)
     ;
