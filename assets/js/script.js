@@ -133,7 +133,7 @@ $(document).ready(function () {
         cir.on("mouseover", function (e) {
           e.target
             .bindPopup(
-              `<p>Գտնված ։ ${place.place}</p><br><p>${
+              `<p>${place.place}</p><br><p style="text-align: center;">${
                 radius != undefined ? radius : place.general
               }</p>`
             )
