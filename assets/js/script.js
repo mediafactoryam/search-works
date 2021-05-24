@@ -42,8 +42,15 @@ $(document).ready(function () {
 
   $(`.calendar ul`).slideUp();
   $(".calendar p").on("click", function () {
-    $(`.calendar ul`).slideUp();
+    if($(`.active`).text() !== $(this).text()){
+    $(`.active`).parent().find("ul").slideUp();
+    }
+    $(".calendar p").removeClass("active")
+    $(this).addClass("active")
+
     $(this).parent().find("ul").slideToggle();
+
+    
   });
 
   let cirArr = [];
@@ -78,7 +85,9 @@ $(document).ready(function () {
     $("li").removeClass("active-date");
     $(this).addClass("active-date");
     $(`p`).removeClass("active-date");
-    $(`p[data-mon="${$("li").data("date").split("-")[1]}"]`).addClass("active-date");
+    $(`p[data-mon="${$("li").data("date").split("-")[1]}"]`).addClass(
+      "active-date"
+    );
   });
 
   $("button").on("click", function () {
@@ -119,22 +128,18 @@ $(document).ready(function () {
         (i) => (general += parseInt(i.general))
       );
       if (isFound == false) {
+        const rgb = scale(general, 1, 212, 255, 100);
         cir = L.circle([lat, lng], {
           color: "transparent",
-          fillColor: "red",
-          fillOpacity: 0.7,
-          radius:
-            radius != undefined
-              ? 3000
-              : general < 10
-              ? 200 * general
-              : 10 * general,
+          fillColor: `rgb(${rgb},0 , 0)`,
+          fillOpacity: 1,
+          radius: 2000,
         }).addTo(map);
         cir.on("mouseover", function (e) {
           e.target
             .bindPopup(
               `<p>${place.place}</p><br><p style="text-align: center;">${
-                radius != undefined ? radius : place.general
+                radius != undefined ? radius : general
               }</p>`
             )
             .openPopup();
@@ -142,15 +147,14 @@ $(document).ready(function () {
 
         cirArr.push(cir);
       } else {
-        const rgb = scale(general, 1, 212, 255, 200);
-        cir.setStyle({
-          fillColor: `rgb(${rgb},0 , 0)`,
-        });
-        if (general < 10) {
-          cir.setRadius(200 * general);
-        } else {
-          cir.setRadius(scale(general, 1, 212, 200, 255) * 10);
-        }
+        // cir.setStyle({
+        //   fillColor: `rgb(${rgb},0 , 0)`,
+        // });
+        // if (general < 10) {
+        //   cir.setRadius(200 * general);
+        // } else {
+        //   cir.setRadius(scale(general, 1, 212, 200, 255) * 10);
+        // }
         for (const i in cirArr) {
           if (i._leaflet_id == cir._leaflet_id) cirArr[i] = cir;
         }
