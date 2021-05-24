@@ -143,7 +143,6 @@ $(document).ready(function () {
 
         map.on("zoomend", function (e) {
           let r = Math.pow(20 - map.getZoom(), 3.3);
-          // if (e._lastCenter != { lat: 39.7572948, lng: 47.1665142 }) {
           myZoom.end = map.getZoom();
           var diff = myZoom.start - myZoom.end;
           console.log(e);
@@ -152,7 +151,6 @@ $(document).ready(function () {
           } else if (diff < 0) {
             cir.setRadius(r);
           }
-          // }
         });
 
         cir.on("mouseover", function (e) {
@@ -160,7 +158,7 @@ $(document).ready(function () {
             .bindPopup(
               `<p>${
                 place.place
-              }</p><br>${cir.getRadius()}<p style="text-align: center;">${
+              }</p><br><p style="text-align: center;">${
                 radius != undefined ? radius : general
               }</p>`
             )
