@@ -130,7 +130,7 @@ $(document).ready(function () {
         cir = L.circle([lat, lng], {
           color: "transparent",
           fillColor: `rgb(${rgb},0 , 0)`,
-          fillOpacity: 1,
+          fillOpacity: 0.5,
           radius: 2000,
         }).addTo(map);
         cir.on("mouseover", function (e) {
