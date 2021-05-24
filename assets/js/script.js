@@ -62,10 +62,10 @@ $(document).ready(function () {
       }
     });
 
-    $("li").removeClass("active-date");
-    $(`li[data-date="${date[i]}"]`).addClass("active-date");
-    $(`p`).removeClass("active-date");
-    $(`p[data-mon="${date[i].split("-")[1]}"]`).addClass("active-date");
+    // $("li").removeClass("active-date");
+    // $(`li[data-date="${date[i]}"]`).addClass("active-date");
+    // $(`p`).removeClass("active-date");
+    // $(`p[data-mon="${date[i].split("-")[1]}"]`).addClass("active-date");
   });
 
   $("li").on("click", function () {
@@ -162,14 +162,6 @@ $(document).ready(function () {
 
         cirArr.push(cir);
       } else {
-        // cir.setStyle({
-        //   fillColor: `rgb(${rgb},0 , 0)`,
-        // });
-        // if (general < 10) {
-        //   cir.setRadius(200 * general);
-        // } else {
-        //   cir.setRadius(scale(general, 1, 212, 200, 255) * 10);
-        // }
         for (const i in cirArr) {
           if (i._leaflet_id == cir._leaflet_id) cirArr[i] = cir;
         }
@@ -179,12 +171,7 @@ $(document).ready(function () {
   function initMap() {
     $(`<div>`).attr("id", "map").prependTo("#root");
     map = L.map("map", {
-      // zoomControl: false,
-      // attributionControl: false,
-      // doubleClickZoom: false,
-      // dragging: false,
-      // scrollWheelZoom: false,
-    }).setView([39.7910695, 46.4359333], zoomLevel);
+    }).setView([39.7572948,47.1665142], zoomLevel);
     L.tileLayer(
       "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2FuZGFyYW1ldCIsImEiOiJja295YjhsOXUwb2JrMnZxZzdjZ2Y2bnpjIn0.IokXB4uVtFryUfE5oYepqA",
       {
@@ -193,8 +180,6 @@ $(document).ready(function () {
         tileSize: 512,
         zoomOffset: -1,
         accessToken: "your.mapbox.access.token",
-        // zoomControl: false,
-        // attributionControl: false,
       }
     ).addTo(map);
   }
