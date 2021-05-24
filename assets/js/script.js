@@ -165,7 +165,7 @@ $(document).ready(function () {
       // zoomControl: false,
       // attributionControl: false,
       // doubleClickZoom: false,
-      dragging: false,
+      // dragging: false,
       // scrollWheelZoom: false,
     }).setView([39.7910695, 46.4359333], zoomLevel);
     L.tileLayer(
