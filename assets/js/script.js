@@ -42,15 +42,13 @@ $(document).ready(function () {
 
   $(`.calendar ul`).slideUp();
   $(".calendar p").on("click", function () {
-    if($(`.active`).text() !== $(this).text()){
-    $(`.active`).parent().find("ul").slideUp();
+    if ($(`.active`).text() !== $(this).text()) {
+      $(`.active`).parent().find("ul").slideUp();
     }
-    $(".calendar p").removeClass("active")
-    $(this).addClass("active")
+    $(".calendar p").removeClass("active");
+    $(this).addClass("active");
 
     $(this).parent().find("ul").slideToggle();
-
-    
   });
 
   let cirArr = [];
@@ -85,7 +83,7 @@ $(document).ready(function () {
     $("li").removeClass("active-date");
     $(this).addClass("active-date");
     $(`p`).removeClass("active-date");
-    $(`p[data-mon="${$("li").data("date").split("-")[1]}"]`).addClass(
+    $(`p[data-mon="${$(this).data("date").split("-")[1]}"]`).addClass(
       "active-date"
     );
   });
@@ -128,7 +126,7 @@ $(document).ready(function () {
         (i) => (general += parseInt(i.general))
       );
       if (isFound == false) {
-        const rgb = scale(general, 1, 212, 255, 100);
+        const rgb = scale(radius != undefined ? radius : general, 1, 212, 255, 100);
         cir = L.circle([lat, lng], {
           color: "transparent",
           fillColor: `rgb(${rgb},0 , 0)`,
