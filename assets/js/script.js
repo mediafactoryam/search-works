@@ -160,11 +160,11 @@ $(document).ready(function () {
   function initMap() {
     $(`<div>`).attr("id", "map").prependTo("#root");
     map = L.map("map", {
-      zoomControl: false,
-      attributionControl: false,
-      doubleClickZoom: false,
+      // zoomControl: false,
+      // attributionControl: false,
+      // doubleClickZoom: false,
       dragging: false,
-      scrollWheelZoom: false,
+      // scrollWheelZoom: false,
     }).setView([39.7910695, 46.4359333], zoomLevel);
     L.tileLayer(
       "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2FuZGFyYW1ldCIsImEiOiJja295YjhsOXUwb2JrMnZxZzdjZ2Y2bnpjIn0.IokXB4uVtFryUfE5oYepqA",
@@ -174,8 +174,8 @@ $(document).ready(function () {
         tileSize: 512,
         zoomOffset: -1,
         accessToken: "your.mapbox.access.token",
-        zoomControl: false,
-        attributionControl: false,
+        // zoomControl: false,
+        // attributionControl: false,
       }
     ).addTo(map);
   }
