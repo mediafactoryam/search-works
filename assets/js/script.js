@@ -52,25 +52,7 @@ $(document).ready(function () {
   });
 
   let cirArr = [];
-  cirArr.map(cir=>{
-    var myZoom = {
-      start:  map.getZoom(),
-      end: map.getZoom()
-    };
-    map.on('zoomstart', function(e) {
-      myZoom.start = map.getZoom();
-   });
-   
-   map.on('zoomend', function(e) {
-       myZoom.end = map.getZoom();
-       var diff = myZoom.start - myZoom.end;
-       if (diff > 0) {
-           cir.setRadius(cir.getRadius() * 2);
-       } else if (diff < 0) {
-           cir.setRadius(cir.getRadius() / 2);
-       }
-   });
-  })
+
   date.map((j, i) => {
     DATA.map((place) => {
       for (const k of Object.keys(place.date)) {
@@ -79,11 +61,6 @@ $(document).ready(function () {
         }
       }
     });
-
-    // $("li").removeClass("active-date");
-    // $(`li[data-date="${date[i]}"]`).addClass("active-date");
-    // $(`p`).removeClass("active-date");
-    // $(`p[data-mon="${date[i].split("-")[1]}"]`).addClass("active-date");
   });
 
   $("li").on("click", function () {
@@ -107,11 +84,13 @@ $(document).ready(function () {
   });
 
   $("button").on("click", function () {
+    $(this).addClass("click");
     cirArr.map((i) => {
       map.removeLayer(i);
     });
     cirArr.length = 0;
-    $(this).toggleClass("click");
+    map.setView([39.7572948, 47.1665142], zoomLevel);
+
     date.map((j, i) => {
       DATA.map((place) => {
         for (const k of Object.keys(place.date)) {
@@ -126,6 +105,8 @@ $(document).ready(function () {
       $(`p`).removeClass("active-date");
       $(`p[data-mon="${date[i].split("-")[1]}"]`).addClass("active-date");
     });
+    setTimeout(()=>$(this).removeClass("click"),1000)
+    ;
   });
   function createCircke(place, radius) {
     let isFound = false;
@@ -144,30 +125,41 @@ $(document).ready(function () {
         (i) => (general += parseInt(i.general))
       );
       if (isFound == false) {
-        const rgb = scale(radius != undefined ? radius : general, 1, 212, 255, 100);
+        const rgb = scale(
+          radius != undefined ? radius : general,
+          1,
+          212,
+          255,
+          100
+        );
         cir = L.circle([lat, lng], {
           color: "transparent",
           fillColor: `rgb(${rgb},0 , 0)`,
           fillOpacity: 0.5,
           radius: 2000,
         }).addTo(map);
-      //   var myZoom = {
-      //     start:  map.getZoom(),
-      //     end: map.getZoom()
-      //   };
-      //   map.on('zoomstart', function(e) {
-      //     myZoom.start = map.getZoom();
-      //  });
-       
-      //  map.on('zoomend', function(e) {
-      //      myZoom.end = map.getZoom();
-      //      var diff = myZoom.start - myZoom.end;
-      //      if (diff > 0) {
-      //          cir.setRadius(cir.getRadius() * 2);
-      //      } else if (diff < 0) {
-      //          cir.setRadius(cir.getRadius() / 2);
-      //      }
-      //  });
+        var myZoom = {
+          start: map.getZoom(),
+          end: map.getZoom(),
+        };
+        map.on("zoomstart", function (e) {
+          if ($(`.click`).length == 0) {
+            myZoom.start = map.getZoom();
+          }
+        });
+
+        map.on("zoomend", function (e) {
+          if ($(`.click`).length == 0) {
+            myZoom.end = map.getZoom();
+            var diff = myZoom.start - myZoom.end;
+            console.log(diff);
+            if (diff > 0) {
+              cir.setRadius(cir.getRadius() * 2);
+            } else if (diff < 0) {
+              cir.setRadius(cir.getRadius() / 2);
+            }
+          }
+        });
         cir.on("mouseover", function (e) {
           e.target
             .bindPopup(
@@ -177,10 +169,8 @@ $(document).ready(function () {
             )
             .openPopup();
         });
-
         cirArr.push(cir);
       } else {
-        
         for (const i in cirArr) {
           if (i._leaflet_id == cir._leaflet_id) cirArr[i] = cir;
         }
@@ -189,8 +179,7 @@ $(document).ready(function () {
   }
   function initMap() {
     $(`<div>`).attr("id", "map").prependTo("#root");
-    map = L.map("map", {
-    }).setView([39.7572948,47.1665142], zoomLevel);
+    map = L.map("map", {}).setView([39.7572948, 47.1665142], zoomLevel);
     L.tileLayer(
       "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2FuZGFyYW1ldCIsImEiOiJja295YjhsOXUwb2JrMnZxZzdjZ2Y2bnpjIn0.IokXB4uVtFryUfE5oYepqA",
       {
