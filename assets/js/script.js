@@ -18,13 +18,13 @@ $(document).ready(function () {
   });
 
   const cal = [
-    ["Մայիս", "May"],
-    ["Ապրիլ", "Apr"],
-    ["Մարտ", "Mar"],
-    ["Փետրվար", "Feb"],
-    ["Հունվար", "Jan"],
-    ["Դեկտեմբեր", "Dec"],
-    ["Նոյեմբեր", "Nov"],
+    ["Մայիս", "May", "05"],
+    ["Ապրիլ", "Apr", "04"],
+    ["Մարտ", "Mar", "03"],
+    ["Փետրվար", "Feb", "02"],
+    ["Հունվար", "Jan", "01"],
+    ["Դեկտեմբեր", "Dec", "12"],
+    ["Նոյեմբեր", "Nov", "11"],
   ];
 
   cal.map((m) => {
@@ -64,6 +64,12 @@ $(document).ready(function () {
   });
 
   $("li").on("click", function () {
+    $("li").removeClass("active-date");
+    $(this).addClass("active-date");
+    $(`p`).removeClass("active-date");
+    $(`p[data-mon="${$(this).data("date").split("-")[1]}"]`).addClass(
+      "active-date"
+    );
     cirArr.map((i) => {
       map.removeLayer(i);
     });
@@ -75,12 +81,6 @@ $(document).ready(function () {
         }
       }
     });
-    $("li").removeClass("active-date");
-    $(this).addClass("active-date");
-    $(`p`).removeClass("active-date");
-    $(`p[data-mon="${$(this).data("date").split("-")[1]}"]`).addClass(
-      "active-date"
-    );
   });
 
   $("button").on("click", function () {
@@ -147,24 +147,29 @@ $(document).ready(function () {
           var diff = myZoom.start - myZoom.end;
           console.log(e);
           if (diff > 0) {
-            cir.setRadius(r );
+            cir.setRadius(r);
           } else if (diff < 0) {
             cir.setRadius(r);
           }
         });
-
+        let d;
+        if ($("li.active-date").data("date")) {
+          d = $("li.active-date").data("date").split("-");
+          d = d[0] + "/" + cal.filter((i) => i[1] == d[1])[0][2] + "/" + d[2];
+        }
         cir.on("mouseover", function (e) {
           e.target
             .bindPopup(
-              `<p>${
-                place.place
-              }</p><br><p style="text-align: center;">${
+              `<p>${place.place}</p><br>
+              ${$("li.active-date").data("date") ? `<p style="text-align: center;" >${d}</p>` : ""}
+              <br><p  style="text-align: center;">${
                 radius != undefined ? radius : general
               }</p>`
             )
             .openPopup();
         });
         cirArr.push(cir);
+        console.log();
       } else {
         for (const i in cirArr) {
           if (i._leaflet_id == cir._leaflet_id) cirArr[i] = cir;
