@@ -115,7 +115,9 @@ $(document).ready(function () {
         }
       }
       let general = 0;
-      DATA.filter((i) => i.place == place.place).map(
+      DATA.filter((i) => i.place == place.place)
+      .filter((i) => i.general != "")
+      .map(
         (i) => (general += parseInt(i.general))
       );
       if (isFound == false) {
