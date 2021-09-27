@@ -370,29 +370,35 @@ $(document).ready(function () {
     return x - y;
   });
 
-  const cal = [
-    ["Հունիս", "Jun", "06"],
-    ["Մայիս", "May", "05"],
-    ["Ապրիլ", "Apr", "04"],
-    ["Մարտ", "Mar", "03"],
-    ["Փետրվար", "Feb", "02"],
-    ["Հունվար", "Jan", "01"],
-    ["Դեկտեմբեր", "Dec", "12"],
-    ["Նոյեմբեր", "Nov", "11"],
+  const WEEK_NAME_LIST = [
+    "հունվար",
+    "փետրվար",
+    "մարտ",
+    "ապրիլ",
+    "մայիս",
+    "հունիս",
+    "հուլիս",
+    "օգոստոս",
+    "սեպտեմբեր",
+    "հոկտեմբեր",
+    "նոյեմբեր",
+    "դեկտեմբեր",
   ];
 
-  cal.map((m) => {
-    $(".calendar").prepend(`<div><p data-mon="${m[1]}">${m[0]}</><ul>
-    ${date
-      .map((d) => {
-        let months = d.split("-")[1];
-        if (months == m[1]) {
-          return `<li data-date="${d}">${d.split("-")[0]}</li>`;
-        }
-      })
-      .join("")}
-    </ul><div>`);
-  });
+  getAvailableDays(json_DATA_4.features);
+
+  // cal.map((m) => {
+  //   $(".calendar").prepend(`<div><p data-mon="${m[1]}">${m[0]}</><ul>
+  //   ${date
+  //     .map((d) => {
+  //       let months = d.split("-")[1];
+  //       if (months == m[1]) {
+  //         return `<li data-date="${d}">${d.split("-")[0]}</li>`;
+  //       }
+  //     })
+  //     .join("")}
+  //   </ul><div>`);
+  // });
 
   $(`.calendar ul`).slideUp();
   $(".calendar p").on("click", function () {
@@ -410,9 +416,9 @@ $(document).ready(function () {
     $("li").removeClass("active-date");
     $(this).addClass("active-date");
     $(`p`).removeClass("active-date");
-    $(`p[data-mon="${$(this).data("date").split("-")[1]}"]`).addClass(
-      "active-date"
-    );
+    // $(`p[data-mon="${$(this).data("date").split("-")[1]}"]`).addClass(
+    //   "active-date"
+    // );
     let x = getFeatures(json_DATA_4.features);
     cluster_DATA_4.clearLayers();
 
@@ -436,7 +442,8 @@ $(document).ready(function () {
     map.setView([39.7572948, 47.1665142], zoomLevel);
 
     function getFeatures(arr) {
-      const d = new Date($(self).data("date")).getTime();
+      const d = $(self).data("date");
+  console.log(d)      
       const tmpArr = [];
       for (const i of arr) {
         const itemDate = new Date(
@@ -493,4 +500,65 @@ function scale(num, inMin, inMax, outMin, outMax) {
   return Math.floor(
     ((num - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin
   );
+}
+
+function getAvailableDays(data) {
+  let ALL_DATES = [];
+  let UNIQUE_MONTH = [];
+  let UNIQUE_DAYS = [];
+  data.map((i) => {
+    let toms = new Date(i["properties"]["Ամսաթիվ"]);
+    ALL_DATES.push(toms.getTime());
+  });
+  ALL_DATES = [...new Set(ALL_DATES.map((i) => i))];
+  ALL_DATES.map((i) => {
+    UNIQUE_MONTH.push({
+      month: new Date(i).toLocaleString("hy", { month: "long" }),
+      num: new Date(i).toLocaleDateString(),
+    });
+  });
+  ALL_DATES.map((i) => {
+    UNIQUE_DAYS.push(new Date(i).getTime());
+  });
+  UNIQUE_MONTH = uniqueBy(UNIQUE_MONTH,['month']);
+  console.log(UNIQUE_DAYS);
+  createMonths();
+
+  function createMonths() {
+    UNIQUE_MONTH.map((month) => {
+      $(".calendar").prepend(
+        `<div><p  data-mon="${month.num}" month-name="${month.num}">${month.month}</><ul> 
+        ${UNIQUE_DAYS.map((i) => {
+          if (new Date(i).toLocaleDateString().split('/')[0] == month.num.split('/')[0]) {
+            return `<li  data-date="${i}">${new Date(i).toLocaleDateString().split('/')[1]}</li>`;
+          }
+        }).join("")}
+        </ul>`
+      );
+    });
+  }
+}
+function uniqueBy(arr, key, $some = false) {
+  if (key instanceof Array) {
+    if ($some) {
+      return key.reduce(uniqueBy, arr);
+    } else {
+      const fnUnique = (obj) => key.reduce((a, k) => `${a}-${obj[k]}`, "");
+      return Object.values(
+        arr.reduce((a, v) => {
+          const key = fnUnique(v);
+          return a[key] === undefined ? ((a[key] = v), a) : a;
+        }, {})
+      );
+    }
+  }
+  return Object.values(
+    arr.reduce(
+      (a, v) => (a[v[key]] === undefined ? ((a[v[key]] = v), a) : a),
+      {}
+    )
+  );
+}
+function removeDuplicates(a) {
+  return a.filter((e) => a.slice(a.indexOf(e) + 1).indexOf(e) === -1);
 }
