@@ -53,9 +53,10 @@ $(document).ready(function () {
       cluster
         .getAllChildMarkers()
         .map(
-          (i) =>
+          (i) =>{
             (c += i._popup._source.feature.properties["Գտնված աճյունների թիվը"])
-        );
+            console.log(i._popup._source)
+          });
       return L.divIcon({
         html: `<div class="marker-cluster">
                 <div class="marker-cluster-${
@@ -171,12 +172,11 @@ $(document).ready(function () {
   var baseMaps = {};
   L.control
     .layers(baseMaps, {
-      '<img src="/assets/legend/DATA_4.png" /> DATA': cluster_DATA_4,
-      '<img src="/assets/legend/Artsakh_actual_border_3.png" /> Artsakh_actual_border':
+      '<img src="/assets/legend/DATA_4.png" /> ՏՎՅԱԼՆԵՐ': cluster_DATA_4,
+      '<img src="/assets/legend/Artsakh_actual_border_3.png" /> ԱՐՑԱԽԻ ՆԵՐԿԱ ՍԱՀՄԱՆՆԵՐ':
         layer_Artsakh_actual_border_3,
-      '<img src="/assets/legend/Artsakh_border_1.png" /> Artsakh_border':
+      '<img src="/assets/legend/Artsakh_border_1.png" /> ԱՐՑԱԽԻ ՍԱՀՄԱՆՆԵՐ':
         layer_Artsakh_border_1,
-      '<img src="legend/NKAR_2.png" /> NKAR': layer_NKAR_2,
     })
     .addTo(map);
 
