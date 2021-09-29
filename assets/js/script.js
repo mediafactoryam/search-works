@@ -50,12 +50,9 @@ $(document).ready(function () {
     spiderfyDistanceMultiplier: 2,
     iconCreateFunction: function (cluster) {
       let c = 0;
-      cluster
-        .getAllChildMarkers()
-        .map(
-          (i) =>{
-            (c += i._popup._source.feature.properties["Գտնված աճյունների թիվը"])
-          });
+      cluster.getAllChildMarkers().map((i) => {
+        c += i._popup._source.feature.properties["Գտնված աճյունների թիվը"];
+      });
       return L.divIcon({
         html: `<div class="marker-cluster">
                 <div class="marker-cluster-${
@@ -171,11 +168,9 @@ $(document).ready(function () {
   var baseMaps = {};
   L.control
     .layers(baseMaps, {
-      'ՏՎՅԱԼՆԵՐ': cluster_DATA_4,
-      'ԱՐՑԱԽԻ ՆԵՐԿԱ ՍԱՀՄԱՆՆԵՐ':
-        layer_Artsakh_actual_border_3,
-      'ԱՐՑԱԽԻ ՍԱՀՄԱՆՆԵՐ':
-        layer_Artsakh_border_1,
+      ՏՎՅԱԼՆԵՐ: cluster_DATA_4,
+      "ԱՐՑԱԽԻ ՆԵՐԿԱ ՍԱՀՄԱՆՆԵՐ": layer_Artsakh_actual_border_3,
+      "ԱՐՑԱԽԻ ՍԱՀՄԱՆՆԵՐ": layer_Artsakh_border_1,
     })
     .addTo(map);
 
@@ -417,9 +412,11 @@ $(document).ready(function () {
       const tmpArr = [];
       for (const i of arr) {
         const itemDate = new Date(
-          `${i.properties[Object.keys(i.properties)[1]].split("-").join("/")} 00:00:00`
-          ).getTime();
-          console.log(i.properties[Object.keys(i.properties)[1]])
+          `${i.properties[Object.keys(i.properties)[1]]
+            .split("-")
+            .join("/")} 00:00:00`
+        ).getTime();
+        console.log(i.properties[Object.keys(i.properties)[1]]);
         if (itemDate == d) {
           tmpArr.push(i);
         }
@@ -490,11 +487,9 @@ function getAvailableDays(data) {
     "հոկտեմբեր",
     "նոյեմբեր",
     "դեկտեմբեր",
-
   ];
   data.map((i) => {
     let toms = new Date(i["properties"]["Ամսաթիվ"].split("-").join("/"));
-    console.log(toms,i["properties"]["Ամսաթիվ"])
     ALL_DATES.push(toms.getTime());
   });
   ALL_DATES = [...new Set(ALL_DATES.map((i) => i))];
@@ -516,15 +511,15 @@ function getAvailableDays(data) {
     if (x < y) return -1;
     return 0;
   });
-  
+
   UNIQUE_MONTH.reverse();
   createMonths();
-  UNIQUE_DAYS.sort()
+  UNIQUE_DAYS.sort();
   function createMonths() {
-    UNIQUE_MONTH.map((month) => {
+    MONTH.map((month) => {
       $(".calendar").prepend(
-        `<div><p  data-mon="${month.num}" month-name="${month.num}">${
-          MONTH[month.num.split("/")[0] - 1] 
+        `<div><p  >${
+          month
         }</><ul> 
         ${UNIQUE_DAYS.map((i) => {
           if (
@@ -538,8 +533,7 @@ function getAvailableDays(data) {
         }).join("")}
         </ul>`
       );
-  UNIQUE_DAYS.sort()
-
+      UNIQUE_DAYS.sort();
     });
   }
 }
