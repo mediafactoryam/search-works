@@ -518,10 +518,10 @@ function getAvailableDays(data) {
   function createMonths() {
     MONTH.map((month) => {
       $(".calendar").prepend(
-        `<div><p  >${
-          month
-        }</><ul> 
-     
+        `<div><p  >${month}</><ul> 
+        ${UNIQUE_DAYS.map((i) => {
+          return `<li  data-date="${i}">${i}</li>`;
+        }).join("")}
         </ul>`
       );
       UNIQUE_DAYS.sort();
