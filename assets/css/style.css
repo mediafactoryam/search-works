@@ -1,6 +1,18 @@
 * {
   box-sizing: border-box;
 }
+@font-face {
+  font-family: ws_semi_light;
+  src: url(https://sandaramet.github.io/students/assets/css/weblysleekuisl.ttf);
+  font-weight: 400;
+  font-style: normal;
+}
+* {
+  box-sizing: border-box;
+  text-align: center;
+  transition: 0.6s;
+  font-family: ws_semi_light;
+}
 path {
   /* transition: 4s; */
 }
