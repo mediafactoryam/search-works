@@ -171,10 +171,10 @@ $(document).ready(function () {
   var baseMaps = {};
   L.control
     .layers(baseMaps, {
-      '<img src="/assets/legend/DATA_4.png" /> ՏՎՅԱԼՆԵՐ': cluster_DATA_4,
-      '<img src="/assets/legend/Artsakh_actual_border_3.png" /> ԱՐՑԱԽԻ ՆԵՐԿԱ ՍԱՀՄԱՆՆԵՐ':
+      'ՏՎՅԱԼՆԵՐ': cluster_DATA_4,
+      'ԱՐՑԱԽԻ ՆԵՐԿԱ ՍԱՀՄԱՆՆԵՐ':
         layer_Artsakh_actual_border_3,
-      '<img src="/assets/legend/Artsakh_border_1.png" /> ԱՐՑԱԽԻ ՍԱՀՄԱՆՆԵՐ':
+      'ԱՐՑԱԽԻ ՍԱՀՄԱՆՆԵՐ':
         layer_Artsakh_border_1,
     })
     .addTo(map);
