@@ -494,42 +494,27 @@ function getAvailableDays(data) {
   });
   ALL_DATES = [...new Set(ALL_DATES.map((i) => i))];
   ALL_DATES.map((i) => {
-    UNIQUE_MONTH.push({
-      month: new Date(i).toLocaleString("hy", { month: "long" }),
-      num: new Date(i).toLocaleDateString(),
-    });
+    UNIQUE_MONTH.push({monNum:new Date(i).getMonth()});
   });
-
   ALL_DATES.map((i) => {
     UNIQUE_DAYS.push(new Date(i).getTime());
   });
-  UNIQUE_MONTH = uniqueBy(UNIQUE_MONTH, ["month"]);
+  UNIQUE_MONTH = uniqueBy(UNIQUE_MONTH,['monNum']);
   UNIQUE_MONTH.sort((a, b) => {
-    const x = new Date(a.num).getTime();
-    const y = new Date(b.num).getTime();
+    const x = new Date(a.monNum).getTime();
+    const y = new Date(b.monNum).getTime();
     if (x > y) return 1;
     if (x < y) return -1;
     return 0;
   });
-
+  
   UNIQUE_MONTH.reverse();
-  createMonths();
   UNIQUE_DAYS.sort();
+  createMonths();
   function createMonths() {
-    MONTH.map((month) => {
+    UNIQUE_MONTH.map((month) => {
       $(".calendar").prepend(
-        `<div><p  >${month}</><ul> 
-        ${UNIQUE_DAYS.map((i) => {
-          if (
-            new Date(i).toLocaleDateString().split("/")[0] ==
-            month.num.split("/")[0]
-          ) {
-            return `<li  data-date="${i}">${
-              new Date(i).toLocaleDateString().split("/")[1]
-            }</li>`;
-          }
-        }).join("")}
-        </ul>`
+        `<div><p >${MONTH[month.monNum]}</><ul> </ul>`
       );
       UNIQUE_DAYS.sort();
     });
