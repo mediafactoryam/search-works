@@ -62,6 +62,7 @@ button:hover{
   justify-items: center;
   height: calc(100vh - 43px);
   overflow: auto;
+  display: none;
 }
 .calendar > div {
   display: grid;

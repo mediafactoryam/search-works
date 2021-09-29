@@ -520,7 +520,14 @@ function getAvailableDays(data) {
       $(".calendar").prepend(
         `<div><p  >${month}</><ul> 
         ${UNIQUE_DAYS.map((i) => {
-          return `<li  data-date="${i}">${i}</li>`;
+          if (
+            new Date(i).toLocaleDateString().split("/")[0] ==
+            month.num.split("/")[0]
+          ) {
+            return `<li  data-date="${i}">${
+              new Date(i).toLocaleDateString().split("/")[1]
+            }</li>`;
+          }
         }).join("")}
         </ul>`
       );
