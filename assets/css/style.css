@@ -8,12 +8,9 @@
   font-style: normal;
 }
 * {
-  box-sizing: border-box;
   font-family: ws_semi_light;
 }
-path {
-  /* transition: 4s; */
-}
+
 body {
   padding: 0px;
   margin: 0px;

@@ -417,8 +417,8 @@ $(document).ready(function () {
       const tmpArr = [];
       for (const i of arr) {
         const itemDate = new Date(
-          `${i.properties[Object.keys(i.properties)[1]]} 00:00:00`
-        ).getTime();
+          `${i.properties[Object.keys(i.properties)[1]].split("-").join("/")} 00:00:00`
+          ).getTime();
         if (itemDate == d) {
           tmpArr.push(i);
         }
