@@ -357,34 +357,6 @@ $(document).ready(function () {
     highlightLayer.openPopup();
   }
 
-  DATA.map((place) => {
-    for (const i in place.date) {
-      date.add(i);
-    }
-  });
-  date = [...date];
-
-  date.sort((a, b) => {
-    let x = new Date(a).getTime();
-    let y = new Date(b).getTime();
-    return x - y;
-  });
-
-  const WEEK_NAME_LIST = [
-    "հունվար",
-    "փետրվար",
-    "մարտ",
-    "ապրիլ",
-    "մայիս",
-    "հունիս",
-    "հուլիս",
-    "օգոստոս",
-    "սեպտեմբեր",
-    "հոկտեմբեր",
-    "նոյեմբեր",
-    "դեկտեմբեր",
-  ];
-
   getAvailableDays(json_DATA_4.features);
 
   // cal.map((m) => {
