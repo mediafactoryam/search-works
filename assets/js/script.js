@@ -55,7 +55,6 @@ $(document).ready(function () {
         .map(
           (i) =>{
             (c += i._popup._source.feature.properties["Գտնված աճյունների թիվը"])
-            console.log(i._popup._source)
           });
       return L.divIcon({
         html: `<div class="marker-cluster">
@@ -415,7 +414,6 @@ $(document).ready(function () {
 
     function getFeatures(arr) {
       const d = $(self).data("date");
-      console.log(d);
       const tmpArr = [];
       for (const i of arr) {
         const itemDate = new Date(
@@ -479,7 +477,8 @@ function getAvailableDays(data) {
   let UNIQUE_MONTH = [];
   let UNIQUE_DAYS = [];
   data.map((i) => {
-    let toms = new Date(i["properties"]["Ամսաթիվ"]);
+    let toms = new Date(i["properties"]["Ամսաթիվ"].split("-").join("/"));
+    console.log(toms,i["properties"]["Ամսաթիվ"])
     ALL_DATES.push(toms.getTime());
   });
   ALL_DATES = [...new Set(ALL_DATES.map((i) => i))];
@@ -489,11 +488,11 @@ function getAvailableDays(data) {
       num: new Date(i).toLocaleDateString(),
     });
   });
+
   ALL_DATES.map((i) => {
     UNIQUE_DAYS.push(new Date(i).getTime());
   });
   UNIQUE_MONTH = uniqueBy(UNIQUE_MONTH, ["month"]);
-  console.log(UNIQUE_MONTH);
   UNIQUE_MONTH.sort((a, b) => {
     const x = new Date(a.num).getTime();
     const y = new Date(b.num).getTime();
