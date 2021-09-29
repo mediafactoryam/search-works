@@ -416,7 +416,6 @@ $(document).ready(function () {
             .split("-")
             .join("/")} 00:00:00`
         ).getTime();
-        console.log(i.properties[Object.keys(i.properties)[1]]);
         if (itemDate == d) {
           tmpArr.push(i);
         }
@@ -524,7 +523,6 @@ function getAvailableDays(data) {
       // }
         // m = month.monNum;
 
-      console.log(month, MONTH[m]);
       $(".calendar").prepend(
         `<div><p >${MONTH[m]}</><ul>
           ${UNIQUE_DAYS.map((i) => {
