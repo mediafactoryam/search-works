@@ -419,6 +419,7 @@ $(document).ready(function () {
         const itemDate = new Date(
           `${i.properties[Object.keys(i.properties)[1]].split("-").join("/")} 00:00:00`
           ).getTime();
+          console.log(i.properties[Object.keys(i.properties)[1]])
         if (itemDate == d) {
           tmpArr.push(i);
         }
@@ -476,6 +477,21 @@ function getAvailableDays(data) {
   let ALL_DATES = [];
   let UNIQUE_MONTH = [];
   let UNIQUE_DAYS = [];
+  let MONTH = [
+    "հունվար",
+    "փետրվար",
+    "մարտ",
+    "ապրիլ",
+    "մայիս",
+    "հունիս",
+    "հուլիս",
+    "օգոստոս",
+    "սեպտեմբեր",
+    "հոկտեմբեր",
+    "նոյեմբեր",
+    "դեկտեմբեր",
+
+  ];
   data.map((i) => {
     let toms = new Date(i["properties"]["Ամսաթիվ"].split("-").join("/"));
     console.log(toms,i["properties"]["Ամսաթիվ"])
@@ -508,7 +524,7 @@ function getAvailableDays(data) {
     UNIQUE_MONTH.map((month) => {
       $(".calendar").prepend(
         `<div><p  data-mon="${month.num}" month-name="${month.num}">${
-          month.month
+          MONTH[month.num.split("/")[0] - 1] 
         }</><ul> 
         ${UNIQUE_DAYS.map((i) => {
           if (
