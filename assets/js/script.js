@@ -521,16 +521,7 @@ function getAvailableDays(data) {
         `<div><p  >${
           month
         }</><ul> 
-        ${UNIQUE_DAYS.map((i) => {
-          if (
-            new Date(i).toLocaleDateString().split("/")[0] ==
-            month.num.split("/")[0]
-          ) {
-            return `<li  data-date="${i}">${
-              new Date(i).toLocaleDateString().split("/")[1]
-            }</li>`;
-          }
-        }).join("")}
+     
         </ul>`
       );
       UNIQUE_DAYS.sort();
