@@ -496,13 +496,12 @@ function getAvailableDays(data) {
   ALL_DATES.map((i) => {
     UNIQUE_MONTH.push({
       time: new Date(i).getTime(),
-      monNum: new Date(i).getMonth(),
+      monNum: new Date(i).getMonth() ,
     });
   });
   ALL_DATES.map((i) => {
     UNIQUE_DAYS.push(new Date(i).getTime());
   });
-  UNIQUE_MONTH = uniqueBy(UNIQUE_MONTH, ["monNum"]);
   UNIQUE_MONTH.sort((a, b) => {
     const x = new Date(a.time);
     const y = new Date(b.time);
@@ -510,23 +509,30 @@ function getAvailableDays(data) {
     if (x < y) return -1;
     return 0;
   });
-
+  
+  UNIQUE_MONTH = uniqueBy(UNIQUE_MONTH, ["monNum"]);
   UNIQUE_MONTH.reverse();
   UNIQUE_DAYS.sort();
   createMonths();
   function createMonths() {
     UNIQUE_MONTH.map((month) => {
-      console.log(month, MONTH[month.monNum]);
+      let m = month.monNum ;
+      // if (month.monNum == 0) {
+        // m = 1;
+      // } else {
+        // m = month.monNum - 1;
+      // }
+        // m = month.monNum;
+
+      console.log(month, MONTH[m]);
       $(".calendar").prepend(
-        `<div><p >${MONTH[month.monNum]}</><ul>
-          ${
-            UNIQUE_DAYS.map((i) => {
+        `<div><p >${MONTH[m]}</><ul>
+          ${UNIQUE_DAYS.map((i) => {
             const d = new Date(i).toDateString();
-            if (new Date(i).getMonth() == month.monNum) {
+            if (new Date(i).getMonth() == m) {
               return `<li  data-date="${i}">${d.split(" ")[2]}</li>`;
             }
-          }).join("")
-          }
+          }).join("")}
 
           </ul>`
       );
