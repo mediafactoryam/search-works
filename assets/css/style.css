@@ -36,14 +36,14 @@ button {
   width: 160px;
   /* border: 0px; */
   border-radius: 2px;
-  background-color: #ff2717;
+  background-color: #f1bf3c;
   color: white;
   border: 0px;
   padding: 12px;
   cursor: pointer;
 }
 button:hover {
-  background-color: #d40f01;
+  background-color: #e6b029;
 }
 #map {
   margin: 0px;
@@ -68,7 +68,7 @@ button:hover {
 }
 .active-mon,
 .active-date {
-  color: red !important;
+  color: #f1bf3c !important;
 }
 
 .leaflet-popup-content {
