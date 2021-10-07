@@ -403,9 +403,9 @@ $(document).ready(function () {
         return L.circleMarker(latlng, style_DATA_4_0(feature));
       },
     });
-
+    const CORD = { lat: 39.7572948, lng: 47.1665142 };
     cluster_DATA_4.addLayer(new_layer_DATA_4);
-    map.setView([39.7572948, 47.1665142], zoomLevel);
+    map.setView([CORD.lat, CORD.lng], zoomLevel);
 
     function getFeatures(arr) {
       const d = $(self).data("date");
@@ -495,7 +495,7 @@ function getAvailableDays(data) {
   ALL_DATES.map((i) => {
     UNIQUE_MONTH.push({
       time: new Date(i).getTime(),
-      monNum: new Date(i).getMonth() ,
+      monNum: new Date(i).getMonth(),
     });
   });
   ALL_DATES.map((i) => {
@@ -508,20 +508,20 @@ function getAvailableDays(data) {
     if (x < y) return -1;
     return 0;
   });
-  
+
   UNIQUE_MONTH = uniqueBy(UNIQUE_MONTH, ["monNum"]);
   UNIQUE_MONTH.reverse();
   UNIQUE_DAYS.sort();
   createMonths();
   function createMonths() {
     UNIQUE_MONTH.map((month) => {
-      let m = month.monNum ;
+      let m = month.monNum;
       // if (month.monNum == 0) {
-        // m = 1;
+      // m = 1;
       // } else {
-        // m = month.monNum - 1;
+      // m = month.monNum - 1;
       // }
-        // m = month.monNum;
+      // m = month.monNum;
 
       $(".calendar").prepend(
         `<div><p >${MONTH[m]}</><ul>
