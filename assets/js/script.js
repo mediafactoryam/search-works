@@ -353,19 +353,6 @@ $(document).ready(function () {
 
   getAvailableDays(json_DATA_4.features);
 
-  // cal.map((m) => {
-  //   $(".calendar").prepend(`<div><p data-mon="${m[1]}">${m[0]}</><ul>
-  //   ${date
-  //     .map((d) => {
-  //       let months = d.split("-")[1];
-  //       if (months == m[1]) {
-  //         return `<li data-date="${d}">${d.split("-")[0]}</li>`;
-  //       }
-  //     })
-  //     .join("")}
-  //   </ul><div>`);
-  // });
-
   $(`.calendar ul`).slideUp();
   $(".calendar p").on("click", function () {
     if ($(`.active`).text() !== $(this).text()) {
@@ -493,14 +480,23 @@ function getAvailableDays(data) {
   });
   ALL_DATES = [...new Set(ALL_DATES.map((i) => i))];
   ALL_DATES.map((i) => {
+    if(i){
     UNIQUE_MONTH.push({
       time: new Date(i).getTime(),
       monNum: new Date(i).getMonth(),
     });
+  }
   });
   ALL_DATES.map((i) => {
     UNIQUE_DAYS.push(new Date(i).getTime());
   });
+  // for (let i = 0; i < UNIQUE_MONTH.length; i++) {
+  //   if (UNIQUE_MONTH[i]["time"]) {
+  //     console.log(UNIQUE_MONTH[i]["time"]);
+  //     // console.log(e);
+  //     // UNIQUE_MONTH.split(1, i);
+  //   }
+  // }
   UNIQUE_MONTH.sort((a, b) => {
     const x = new Date(a.time);
     const y = new Date(b.time);
@@ -508,21 +504,15 @@ function getAvailableDays(data) {
     if (x < y) return -1;
     return 0;
   });
-
   UNIQUE_MONTH = uniqueBy(UNIQUE_MONTH, ["monNum"]);
   UNIQUE_MONTH.reverse();
   UNIQUE_DAYS.sort();
+  // console.log(UNIQUE_MONTH);
   createMonths();
   function createMonths() {
     UNIQUE_MONTH.map((month) => {
+      // console.log(month.monNum);
       let m = month.monNum;
-      // if (month.monNum == 0) {
-      // m = 1;
-      // } else {
-      // m = month.monNum - 1;
-      // }
-      // m = month.monNum;
-
       $(".calendar").prepend(
         `<div><p >${MONTH[m]}</><ul>
           ${UNIQUE_DAYS.map((i) => {
