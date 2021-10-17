@@ -368,6 +368,8 @@ $(document).ready(function () {
     const self = this;
     $("li").removeClass("active-date");
     $(this).addClass("active-date");
+    $(".active-date").parent().parent().find("p").addClass("active-date");
+
     $(`p`).removeClass("active-date");
     // $(`p[data-mon="${$(this).data("date").split("-")[1]}"]`).addClass(
     //   "active-date"
@@ -436,6 +438,7 @@ $(document).ready(function () {
     map.setView([39.7572948, 47.1665142], zoomLevel);
     $(".calendar li").removeClass("active-date");
     $(".calendar p").removeClass("active-date");
+    $(".active").removeClass("active");
     $(`.active`).parent().find("ul").slideUp();
 
     function getFeatures(arr) {
@@ -480,23 +483,17 @@ function getAvailableDays(data) {
   });
   ALL_DATES = [...new Set(ALL_DATES.map((i) => i))];
   ALL_DATES.map((i) => {
-    if(i){
-    UNIQUE_MONTH.push({
-      time: new Date(i).getTime(),
-      monNum: new Date(i).getMonth(),
-    });
-  }
+    if (i) {
+      UNIQUE_MONTH.push({
+        time: new Date(i).getTime(),
+        monNum: new Date(i).getMonth(),
+      });
+    }
   });
   ALL_DATES.map((i) => {
     UNIQUE_DAYS.push(new Date(i).getTime());
   });
-  // for (let i = 0; i < UNIQUE_MONTH.length; i++) {
-  //   if (UNIQUE_MONTH[i]["time"]) {
-  //     console.log(UNIQUE_MONTH[i]["time"]);
-  //     // console.log(e);
-  //     // UNIQUE_MONTH.split(1, i);
-  //   }
-  // }
+
   UNIQUE_MONTH.sort((a, b) => {
     const x = new Date(a.time);
     const y = new Date(b.time);
@@ -507,14 +504,12 @@ function getAvailableDays(data) {
   UNIQUE_MONTH = uniqueBy(UNIQUE_MONTH, ["monNum"]);
   UNIQUE_MONTH.reverse();
   UNIQUE_DAYS.sort();
-  // console.log(UNIQUE_MONTH);
   createMonths();
   function createMonths() {
     UNIQUE_MONTH.map((month) => {
-      // console.log(month.monNum);
       let m = month.monNum;
       $(".calendar").prepend(
-        `<div><p >${MONTH[m]}</><ul>
+        `<div><p data-date="${month.monNum}">${MONTH[m]}</p><ul>
           ${UNIQUE_DAYS.map((i) => {
             const d = new Date(i).toDateString();
             if (new Date(i).getMonth() == m) {
@@ -526,6 +521,7 @@ function getAvailableDays(data) {
       );
       UNIQUE_DAYS.sort();
     });
+    addYears(UNIQUE_MONTH);
   }
 }
 function uniqueBy(arr, key, $some = false) {
@@ -551,4 +547,27 @@ function uniqueBy(arr, key, $some = false) {
 }
 function removeDuplicates(a) {
   return a.filter((e) => a.slice(a.indexOf(e) + 1).indexOf(e) === -1);
+}
+function addYears(months) {
+  // months.reverse()
+  // months.map(({time})=>{
+  // const year = new Date(time).toDateString().split(" ")[3]
+  // console.log(year)
+  $(`.calendar`).prepend(
+    $(`
+      <div class="year">
+        <p>2020</p>
+      <div>
+    `)
+  );
+  $(`p[data-date="11"]`)
+    .parent()
+    .after(
+      $(`
+      <div class="year">
+        <p>2021</p>
+      <div>
+    `)
+    );
+  // })
 }

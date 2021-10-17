@@ -67,7 +67,7 @@ button:hover {
   display: grid;
 }
 .active-mon,
-.active-date {
+.active-date,.active {
   color: #f1bf3c !important;
 }
 
@@ -83,4 +83,15 @@ button:hover {
   position: absolute;
   top: 2px;
   right: 6px;
+}
+.year{
+  border-bottom: 2px solid #f1bf3c;
+  color: #f1bf3c;
+
+}
+.year>p{
+  margin: 6px;
+  font-weight: bold;
+  cursor: default;
+
 }
