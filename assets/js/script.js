@@ -439,7 +439,7 @@ $(document).ready(function () {
     $(".calendar li").removeClass("active-date");
     $(".calendar p").removeClass("active-date");
     $(".active").removeClass("active");
-    $(`.active`).parent().find("ul").slideUp();
+    $(`ul`).slideUp();
 
     function getFeatures(arr) {
       return arr;
