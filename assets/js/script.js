@@ -494,6 +494,7 @@ function getAvailableDays(data) {
     UNIQUE_DAYS.push(new Date(i).getTime());
   });
 
+  UNIQUE_MONTH = uniqueBy(UNIQUE_MONTH, ["monNum"]);
   UNIQUE_MONTH.sort((a, b) => {
     const x = new Date(a.time);
     const y = new Date(b.time);
@@ -501,14 +502,13 @@ function getAvailableDays(data) {
     if (x < y) return -1;
     return 0;
   });
-  UNIQUE_MONTH = uniqueBy(UNIQUE_MONTH, ["monNum"]);
-  UNIQUE_MONTH.reverse();
-  UNIQUE_DAYS.sort();
+  console.log(UNIQUE_MONTH);
   createMonths();
   function createMonths() {
     UNIQUE_MONTH.map((month) => {
       let m = month.monNum;
-      $(".calendar").prepend(
+      console.log(month);
+      $(".calendar").append(
         `<div><p data-date="${month.monNum}">${MONTH[m]}</p><ul>
           ${UNIQUE_DAYS.map((i) => {
             const d = new Date(i).toDateString();
@@ -519,9 +519,8 @@ function getAvailableDays(data) {
 
           </ul>`
       );
-      UNIQUE_DAYS.sort();
     });
-    addYears(UNIQUE_MONTH);
+    addYears();
   }
 }
 function uniqueBy(arr, key, $some = false) {
@@ -548,11 +547,7 @@ function uniqueBy(arr, key, $some = false) {
 function removeDuplicates(a) {
   return a.filter((e) => a.slice(a.indexOf(e) + 1).indexOf(e) === -1);
 }
-function addYears(months) {
-  // months.reverse()
-  // months.map(({time})=>{
-  // const year = new Date(time).toDateString().split(" ")[3]
-  // console.log(year)
+function addYears() {
   $(`.calendar`).prepend(
     $(`
       <div class="year">
